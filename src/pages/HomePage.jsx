@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
-import pierreIcon from "../../public/assets/rock.png";
-import papierIcon from "../../public/assets/paper.png";
-import ciseauxIcon from "../../public/assets/scissors.png";
+import pierreIcon from "../assets/rock.png";
+import papierIcon from "../assets/paper.png";
+import ciseauxIcon from "../assets/scissors.png";
 
 function HomePage() {
     return (
