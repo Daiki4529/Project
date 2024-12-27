@@ -1,15 +1,15 @@
-import 'react';
-import Navbar from "../components/Navbar.jsx";
-import RegisterForm from "../components/RegisterForm.jsx";
+import "react";
+import Navbar from "../components/Navbar";
+import RegisterForm from "../components/RegisterForm";
 
 function RegisterPage() {
-    return (
-        <div>
-            <Navbar />
-            <h1>Inscription</h1>
-            <RegisterForm />
-        </div>
-    );
+  return (
+    <div>
+      <Navbar />
+      <h1>Inscription</h1>
+      <RegisterForm />
+    </div>
+  );
 }
 
 export default RegisterPage;
