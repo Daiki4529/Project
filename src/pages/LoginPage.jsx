@@ -1,5 +1,4 @@
 import "react";
-import Navbar from "../components/Navbar";
 import LoginForm from "../components/LoginForm";
 
 function LoginPage() {

@@ -1,5 +1,4 @@
 import "react";
-import Navbar from "../components/Navbar";
 import MatchList from "../components/MatchList";
 
 function MatchesPage() {

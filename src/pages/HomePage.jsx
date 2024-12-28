@@ -1,4 +1,3 @@
-import Navbar from "../components/Navbar";
 import pierreIcon from "../assets/rock.png";
 import papierIcon from "../assets/paper.png";
 import ciseauxIcon from "../assets/scissors.png";
