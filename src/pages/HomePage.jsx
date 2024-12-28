@@ -6,7 +6,6 @@ import ciseauxIcon from "../assets/scissors.png";
 function HomePage() {
   return (
     <div className="home-page">
-      <Navbar />
       <div className="rules-container">
         <h1>Bienvenue sur Chifoumi !</h1>
         <div className="rules-content">

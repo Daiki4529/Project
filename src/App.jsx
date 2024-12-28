@@ -5,11 +5,13 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import MatchesPage from "./pages/MatchesPage.jsx";
 import { AuthProvider } from "./auth/AuthProvider";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />

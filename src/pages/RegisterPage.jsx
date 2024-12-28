@@ -5,7 +5,6 @@ import RegisterForm from "../components/RegisterForm";
 function RegisterPage() {
   return (
     <div>
-      <Navbar />
       <h1>Inscription</h1>
       <RegisterForm />
     </div>
