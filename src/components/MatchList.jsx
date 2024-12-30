@@ -18,7 +18,7 @@ function MatchList({ token }) {
 
   useEffect(() => {
     read();
-  }, []);
+  }, [matches]);
 
   return (
       <div>
