@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import Button from "./Button";
-import {MatchContext} from "../../context/MatchProvider.jsx";
+import {MatchContext} from "../context/MatchProvider.jsx";
 
 function MatchList({ token }) {
   const [matches, setMatches] = useState([])

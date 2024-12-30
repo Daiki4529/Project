@@ -1,5 +1,5 @@
 import React, {createContext} from "react";
-import apiClient from "../src/api/apiClient.js";
+import apiClient from "../api/apiClient.js";
 
 export const MatchContext = createContext();
 
