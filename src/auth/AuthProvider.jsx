@@ -4,7 +4,7 @@ import apiClient from "../api/apiClient";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
 
   const register = async (credentials) => {
     await apiClient.post("/register", credentials);
@@ -14,12 +14,12 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     const response = await apiClient.post("/login", credentials);
     setToken(response.data.token);
-    localStorage.setItem("token", response.data.token);
+    sessionStorage.setItem("token", response.data.token);
   };
 
   const logout = () => {
     setToken(null);
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
   };
 
   return (
