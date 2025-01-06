@@ -16,8 +16,8 @@ export const MatchProvider = ({ children }) => {
         return await apiClient.post("/matches");
     }
 
-    const playTurn = async (matchId, turnId) => {
-        return await apiClient.post(`/matches/${matchId}/turns/${turnId}`);
+    const playTurn = async (matchId, turnId, move) => {
+        return await apiClient.post(`/matches/${matchId}/turns/${turnId}`, { move });
     }
 
     return (

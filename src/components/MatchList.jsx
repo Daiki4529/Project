@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import Button from "./Button";
 import {MatchContext} from "../context/MatchProvider.jsx";
+import { Link } from "react-router-dom";
 
 function MatchList() {
   const [matches, setMatches] = useState([])
@@ -30,6 +31,7 @@ function MatchList() {
                 <p>Match ID: {match._id}</p>
                 <p>Joueur 1: {match.user1.username}</p>
                 <p>Joueur 2: {match.user2 ? match.user2.username : "En attente"}</p>
+                <Link to={`/matches/${match._id}`}>Voir le match</Link>
               </li>
           ))}
         </ul>

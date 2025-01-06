@@ -15,11 +15,13 @@ export const AuthProvider = ({ children }) => {
     const response = await apiClient.post("/login", credentials);
     setToken(response.data.token);
     sessionStorage.setItem("token", response.data.token);
+    sessionStorage.setItem("username", credentials.username);
   };
 
   const logout = () => {
     setToken(null);
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("username");
   };
 
   return (
