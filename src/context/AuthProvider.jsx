@@ -4,7 +4,7 @@ import apiClient from "../api/apiClient";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
 
   const register = async (credentials) => {
     await apiClient.post("/register", credentials);

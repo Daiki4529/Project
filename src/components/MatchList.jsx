@@ -4,6 +4,23 @@ import {MatchContext} from "../context/MatchProvider.jsx";
 import { Link } from "react-router-dom";
 
 function MatchList() {
+  const [matches, setMatches] = useState([])
+    const [newMatches, setNewMatches] = useState([])
+  const { getMatches, createMatch } = useContext(MatchContext);
+  const read = async () => {
+      const result = await getMatches();
+      setMatches(result.data);
+  }
+
+  const create = async () => {
+      const result = await createMatch();
+      setNewMatches(result.data);
+  }
+
+  useEffect(() => {
+    read();
+  }, [matches]);
+
   return (
       <div>
         <h1>Liste des matchs</h1>
@@ -22,4 +39,4 @@ function MatchList() {
   );
 }
 
-export default MatchList
+export default MatchList;
