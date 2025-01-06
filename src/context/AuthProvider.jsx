@@ -14,12 +14,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     const response = await apiClient.post("/login", credentials);
     setToken(response.data.token);
-    localStorage.setItem("token", response.data.token);
+    sessionStorage.setItem("token", response.data.token);
+    sessionStorage.setItem("username", credentials.username);
   };
 
   const logout = () => {
     setToken(null);
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("username");
   };
 
   return (

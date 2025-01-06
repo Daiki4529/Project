@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import Input from "./Input";
 import { useContext } from "react";
-import { AuthContext } from "../auth/AuthProvider";
+import { AuthContext } from "../context/AuthProvider";
 
 function LoginForm() {
   const { login } = useContext(AuthContext);
