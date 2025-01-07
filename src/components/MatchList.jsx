@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function MatchList() {
   const [matches, setMatches] = useState([])
   const [newMatches, setNewMatches] = useState([])
-  const { getMatches, createMatch, getMatchById } = useContext(MatchContext);
+  const { getMatches, createMatch } = useContext(MatchContext);
 
   const read = async () => {
       const result = await getMatches();
