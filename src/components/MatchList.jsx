@@ -10,7 +10,8 @@ function MatchList() {
 
   const read = async () => {
       const result = await getMatches();
-      setMatches(result.data);
+      const filteredMatches = result.data.filter(e => e.winner === undefined)
+      setMatches(filteredMatches);
   }
 
   const create = async () => {

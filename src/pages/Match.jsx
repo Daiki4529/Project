@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { MatchContext } from "../context/MatchProvider";
 import Button from "../components/Button";
 
@@ -18,6 +18,8 @@ function Match() {
 
   const moves = ["rock", "paper", "scissors"];
   const currentUsername = sessionStorage.getItem("username");
+
+  const navigate = useNavigate();
 
   const getUserNumber = (match) => {
     if (match.user1.username === currentUsername) {
@@ -110,10 +112,22 @@ function Match() {
 
   const getTurnNumber = () => {
     const turns = match.turns;
-    if (turns[turns.length - 1]?.user1 && turns[turns.length - 1]?.user2) {
+    const startTurn = turns.length === 0;
+    const playerOnePlayed = turns.length > 0 && (turns[turns.length - 1].user1 !== undefined);
+    const playerTwoPlayed = turns.length > 0 && (turns[turns.length - 1].user2 !== undefined);
+    const onePlayedTurn = (playerOnePlayed ^ playerTwoPlayed);
+    const twoPlayedTurn = (playerOnePlayed && playerTwoPlayed);
+    const gameOverTurn = playerWins >= 2 || opponentWins >= 2 || isDraw;
+
+    if (gameOverTurn) {
+      return null;
+    } else if (startTurn) {
+      return 1;
+    } else if (onePlayedTurn) {
+      return turns.length
+    } else if (twoPlayedTurn) {
       return turns.length + 1;
     }
-    return turns.length;
   };
 
   const getResult = (turn) => {
@@ -123,42 +137,44 @@ function Match() {
   };
 
   return (
-    <div>
-      {match && <h2>Tour {match.turns.length}</h2>}
-
-      {/* <pre style={{ textAlign: "left" }}>{JSON.stringify(match, null, 2)}</pre> */}
-
       <div>
-        <h3>Score</h3>
-        <p>{match?.user1.username}: {userNumber === "user1" ? playerWins : opponentWins} wins</p>
-        <p>{match?.user2?.username || "Opponent"}: {userNumber === "user2" ? playerWins : opponentWins} wins</p>
+        {match && <h2>Tour {match.turns.length}</h2>}
+
+        {/* <pre style={{ textAlign: "left" }}>{JSON.stringify(match, null, 2)}</pre> */}
+
+        <div>
+          <h3>Score</h3>
+          <p>{match?.user1.username}: {userNumber === "user1" ? playerWins : opponentWins} wins</p>
+          <p>{match?.user2?.username || "Opponent"}: {userNumber === "user2" ? playerWins : opponentWins} wins</p>
+        </div>
+
+        <h3>Turns</h3>
+        {match?.turns
+            .filter((turn) => turn.user1 && turn.user2)
+            .map((turn, index) => (
+                <p key={index}>
+                  Turn {index + 1}: {getResult(turn)}
+                </p>
+            ))
+        }
+
+        {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
+
+        {playerWins < 2 && opponentWins < 2 && !isDraw && moves.map((move) => (
+            <Button
+                key={move}
+                onClick={() => play(move)}
+                text={move.at(0).toUpperCase() + move.slice(1)}
+                disabled={isWaiting}
+            />
+        ))}
+
+        {playerWins >= 2 && <h3>You won the match!</h3>}
+        {opponentWins >= 2 && <h3>You lost the match!</h3>}
+        {isDraw && <h3>The match is a draw!</h3>}
+        <br/><br/>
+        <Button onClick={() => navigate("/matches")} text="Back to matches"/>
       </div>
-
-      <h3>Turns</h3>
-      {match?.turns
-        .filter((turn) => turn.user1 && turn.user2)
-        .map((turn, index) => (
-          <p key={index}>
-            Turn {index + 1}: {getResult(turn)}
-          </p>
-        ))
-      }
-
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-
-      {playerWins < 2 && opponentWins < 2 && !isDraw && moves.map((move) => (
-        <Button
-          key={move}
-          onClick={() => play(move)}
-          text={move.at(0).toUpperCase() + move.slice(1)}
-          disabled={isWaiting}
-        />
-      ))}
-
-      {playerWins >= 2 && <h3>You won the match!</h3>}
-      {opponentWins >= 2 && <h3>You lost the match!</h3>}
-      {isDraw && <h3>The match is a draw!</h3>}
-    </div>
   );
 }
 
