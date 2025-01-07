@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 
 function MatchList() {
   const [matches, setMatches] = useState([])
-    const [newMatches, setNewMatches] = useState([])
+  const [newMatches, setNewMatches] = useState([])
   const { getMatches, createMatch } = useContext(MatchContext);
+
   const read = async () => {
       const result = await getMatches();
       setMatches(result.data);
@@ -18,7 +19,11 @@ function MatchList() {
   }
 
   useEffect(() => {
-    read();
+    const timeoutId = setTimeout(() => {
+      read();
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
   }, [matches]);
 
   return (
