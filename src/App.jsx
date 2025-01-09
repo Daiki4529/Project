@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import MatchListPage from "./pages/MatchListPage.jsx";
 import MatchPage from "./pages/MatchPage.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import "./App.css";
 
 function App() {
@@ -19,8 +20,22 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/matches" element={<MatchListPage />} />
-            <Route path="/matches/:matchId" element={<MatchPage />} />
+            <Route
+              path="/matches"
+              element={
+                <ProtectedRoute>
+                  <MatchListPage />
+                </ProtectedRoute>
+              }
+              />
+            <Route
+              path="/matches/:matchId"
+              element={
+                <ProtectedRoute>
+                  <MatchPage />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </Router>
       </MatchProvider>
