@@ -6,11 +6,14 @@ import { useContext, useEffect, useState } from "react";
 function MatchListPage() {
   const [matches, setMatches] = useState([]);
   const { getMatches, createMatch } = useContext(MatchContext);
+  const username = sessionStorage.getItem("username");
+  const [filteredMatches, setFilteredMatches] = useState([]);
 
   const read = async () => {
     const result = await getMatches();
     const filteredMatches = result.data.filter((e) => e.winner === undefined);
-    setMatches(filteredMatches);
+    setMatches(result.data);
+    setFilteredMatches(filteredMatches);
   };
 
   const create = async () => {
@@ -26,34 +29,51 @@ function MatchListPage() {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  const totalMatches = matches.length;
+  const wonMatches = matches.filter((e) => e.winner?.username === username).length;
+  const lostMatches = matches.filter((e) => e.winner?.username !== username && e.winner !== null && e.winner !== undefined).length;
+  const drawMatches = matches.filter((e) => e.winner === null).length;
+
+  // Calcul des pourcentages
+  const winrate = totalMatches > 0 ? ((wonMatches / totalMatches) * 100).toFixed(2) : 0;
+  const lossrate = totalMatches > 0 ? ((lostMatches / totalMatches) * 100).toFixed(2) : 0;
+  const drawrate = totalMatches > 0 ? ((drawMatches / totalMatches) * 100).toFixed(2) : 0;
+
   return (
     <>
       <h1>Matches</h1>
       <div className="match-list-container">
+        <h2>Statistiques</h2>
+        <p>Total de matchs : {totalMatches}</p>
+        <p>Gagné : {wonMatches} ({winrate}%)</p>
+        <p>Perdu : {lostMatches} ({lossrate}%)</p>
+        <p>Égalité : {drawMatches} ({drawrate}%)</p>
         <h1 className="match-list-title">Liste des matchs</h1>
         <Button
-          text="Créer un nouveau match"
-          onClick={create}
-          className="btn-primary create-match-btn"
+            text="Créer un nouveau match"
+            onClick={create}
+            className="btn-primary create-match-btn"
         />
         <ul className="match-list">
-          {matches.map((match) => (
-            <li key={match._id} className="match-item">
-              <div className="match-item-details">
-                <p>
-                  Joueur 1: <strong>{match.user1.username}</strong>
-                </p>
-                <p>
-                  Joueur 2:{" "}
-                  <strong>
-                    {match.user2 ? match.user2.username : "En attente"}
-                  </strong>
-                </p>
-              </div>
-              <Link to={`/matches/${match._id}`} className="view-match-link">
-                Voir le match
-              </Link>
-            </li>
+          {filteredMatches.map((match) => (
+              <li key={match._id} className="match-item">
+                <div className="match-item-details">
+                  <p>
+                    Joueur 1: <strong>{match.user1.username}</strong>
+                  </p>
+                  <p>
+                    Joueur 2:{" "}
+                    <strong>
+                      {match.user2 ? match.user2.username : "En attente"}
+                    </strong>
+                  </p>
+                </div>
+                {match.user2 && (
+                    <Link to={`/matches/${match._id}`} className="view-match-link">
+                      Voir le match
+                    </Link>
+                )}
+              </li>
           ))}
         </ul>
       </div>
