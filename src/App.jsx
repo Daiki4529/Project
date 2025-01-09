@@ -1,14 +1,14 @@
-import "./App.css";
-import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
+import { AuthProvider } from "./context/AuthProvider.jsx";
+import { MatchProvider } from "./context/MatchProvider.jsx";
+import Navbar from "./components/Navbar.jsx";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
-import MatchesPage from "./pages/MatchesPage.jsx";
-import {AuthContext, AuthProvider} from "./context/AuthProvider.jsx";
-import Navbar from "./components/Navbar.jsx";
-import { MatchProvider } from "./context/MatchProvider.jsx";
-import Match from "./pages/Match.jsx";
+import MatchListPage from "./pages/MatchListPage.jsx";
+import MatchPage from "./pages/MatchPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import "./App.css";
 
 function App() {
   return (
@@ -24,15 +24,15 @@ function App() {
               path="/matches"
               element={
                 <ProtectedRoute>
-                  <MatchesPage />
+                  <MatchListPage />
                 </ProtectedRoute>
               }
-            />
+              />
             <Route
               path="/matches/:matchId"
               element={
                 <ProtectedRoute>
-                  <Match />
+                  <MatchPage />
                 </ProtectedRoute>
               }
             />
