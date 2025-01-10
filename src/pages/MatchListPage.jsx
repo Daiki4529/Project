@@ -30,14 +30,15 @@ function MatchListPage() {
   }, []);
 
   const totalMatches = matches.length;
+  const totalFinishedMatches = matches.filter((e) => e.winner !== undefined).length;
   const wonMatches = matches.filter((e) => e.winner?.username === username).length;
   const lostMatches = matches.filter((e) => e.winner?.username !== username && e.winner !== null && e.winner !== undefined).length;
   const drawMatches = matches.filter((e) => e.winner === null).length;
 
   // Calcul des pourcentages
-  const winrate = totalMatches > 0 ? ((wonMatches / totalMatches) * 100).toFixed(2) : 0;
-  const lossrate = totalMatches > 0 ? ((lostMatches / totalMatches) * 100).toFixed(2) : 0;
-  const drawrate = totalMatches > 0 ? ((drawMatches / totalMatches) * 100).toFixed(2) : 0;
+  const winrate = totalFinishedMatches > 0 ? ((wonMatches / totalFinishedMatches) * 100).toFixed(2) : 0;
+  const lossrate = totalFinishedMatches > 0 ? ((lostMatches / totalFinishedMatches) * 100).toFixed(2) : 0;
+  const drawrate = totalFinishedMatches > 0 ? ((drawMatches / totalFinishedMatches) * 100).toFixed(2) : 0;
 
   return (
     <>
